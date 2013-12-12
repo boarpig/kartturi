@@ -80,6 +80,7 @@ def main():
         description="""Make maps out of kansalaisen.karttapaikka.fi maps""")
     parser.add_argument("-c", "--coordinates", nargs=4,
             default=[385943, 7221032, 396643, 7210952], type=int,
+            metavar=('West', 'North', 'East', 'South'),
             help="Coordinates for north-west and south-east corners of map.")
     scales = [8000000, 4000000, 2000000, 800000, 400000, 200000, 
                 80000, 40000, 16000, 8000, 4000, 2000]
