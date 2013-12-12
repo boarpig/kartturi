@@ -32,7 +32,12 @@ def vertAdd(upper, lower):
 def getMap(coord):
     coordstr = str(coord[0]) + ',' + str(coord[1]) + ',' + str((coord[0])+2400) + ',' + str((coord[1])+2400)
     mapname = ''
-    mapname, header = urlretrieve("http://kansalaisen.karttapaikka.fi/image?request=GetMap&bbox=" + coordstr + "&scale=16000&width=600&height=600&srs=NLSFI:kkj&styles=normal&lang=FI&lmid=1210782329134")
+    url = "http://kansalaisen.karttapaikka.fi/image?" + "request=GetMap" + \
+        "&bbox=" + coordstr + "&scale=80000" + "&width=600" + \
+        "&height=600" + "&srs=EPSG:3067" + "&styles=normal" + \
+        "&lang=fi" + "&lmid=1386864555392" #"&lmid=1210782329134"
+    mapname, header = urlretrieve(url)
+    print(url)
     outimg = Image.open(mapname)
     return outimg
 
