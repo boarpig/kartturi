@@ -66,10 +66,5 @@ def genMap(coords=(0,0,0,0)):
             whole = horzAdd(whole, column)
     whole.save('koko.png')
 
-def main():
-    pass
-
 if __name__ == "__main__":
-    main()
-
-genMap((425,7205,431,7199))
+    genMap((425,7205,431,7199))
