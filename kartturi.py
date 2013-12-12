@@ -32,7 +32,7 @@ def vertical_add(upper, lower):
         return outimg
 
 def get_file(url):
-    sleep(1)
+    sleep(args.delay)
     s = urlopen(url)
     img = tempfile()
     img.write(s.read())
@@ -83,6 +83,9 @@ def main():
             help="Coordinates for north-west and south-east corners of map.")
     parser.add_argument("-s", "--scale", default=80000, type=int,
             help="Scale of the map. e.g. if you want 1:80000, input 80000")
+    parser.add_argument("-d", "--delay", default=1, type=int,
+            help="Number of seconds between each server request, default: 1")
+    global args
     args = parser.parse_args()
     generate_map(args.coordinates, args.scale)
 
