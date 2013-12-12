@@ -84,12 +84,14 @@ def main():
     scales = [8000000, 4000000, 2000000, 800000, 400000, 200000, 
                 80000, 40000, 16000, 8000, 4000, 2000]
     parser.add_argument("-s", "--scale", default=80000, type=int,
-            choices=scales,
             help="Scale of the map. e.g. if you want 1:80000, input 80000")
     parser.add_argument("-d", "--delay", default=1, type=int,
             help="Number of seconds between each server request, default: 1")
     global args
     args = parser.parse_args()
+    if args.scale not in scales:
+        print("Error: Invalid scale\nChoose from: " + str(scales))
+        exit(1)
     generate_map(args.coordinates, args.scale)
 
 if __name__ == "__main__":
