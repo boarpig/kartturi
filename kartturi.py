@@ -2,8 +2,10 @@
 
 from PIL import Image, ImageChops
 from math import ceil, fabs
-from urllib import urlretrieve
+from urllib.request import urlopen
+from tempfile import NamedTemporaryFile as tempfile
 import argparse
+from time import sleep
 
 def horzAdd(left, right):
     if left.size[1] == right.size[1]:
@@ -29,29 +31,34 @@ def vertAdd(upper, lower):
         outimg.paste(lower, (0, upper.size[1]))
         return outimg
 
+def getFile(url):
+    sleep(1)
+    s = urlopen(url)
+    img = tempfile()
+    img.write(s.read())
+    return img
+
 def getMap(coord, scale):
     coordstr = str(coord[0]) + ',' + str(coord[1]) + ',' + str((coord[0])+2400) + ',' + str((coord[1])+2400)
     mapname = ''
     url = "http://kansalaisen.karttapaikka.fi/image?" + "request=GetMap" + \
         "&bbox=" + coordstr + "&scale=" + str(scale) + "&width=600" + \
         "&height=600" + "&srs=EPSG:3067" + "&styles=normal" + \
-        "&lang=fi" + "&lmid=1386864555392" #"&lmid=1210782329134"
-    mapname, header = urlretrieve(url)
-    print(url)
-    outimg = Image.open(mapname)
+        "&lang=fi" + "&lmid=1386864555392"
+    image = getFile(url)
+    outimg = Image.open(image.name)
+    image.close()
     return outimg
 
-def genMap(coords=(0,0,0,0), scale=80000):
+def genMap(coords=(0,0,0,0), scale=40000):
     coords = list(coords)
-    for i, value in enumerate(coords):
-        coords[i] = value*1000
     addition = 1920
     width = int(fabs(ceil((coords[2]-coords[0])/float(addition))))
     height = int(fabs(ceil((coords[3]-coords[1])/float(addition))))
     maara = width *(height+2)
     monesko = 0
-    for x in xrange(width):
-        for y in xrange(height+2):
+    for x in range(width):
+        for y in range(height+2):
             monesko += 1
             print("%.0f%%, %i/%i" % (monesko/float(maara)*100, monesko, maara))
             coord = (coords[0] + x*addition, coords[1] - y*addition)
@@ -70,7 +77,7 @@ def main():
     parser = argparse.ArgumentParser(description="""Make maps out of
         kansalaisen.karttapaikka.fi maps""")
     parser.add_argument("-c", "--coordinates", nargs=4,
-            default=[427145, 7215320, 428345, 7216520], type=int,
+            default=[385943, 7221032, 396643, 7210952], type=int,
             help="Coordinates for north-west and south-east corners of map.")
     parser.add_argument("-s", "--scale", default=80000, type=int,
             help="Scale of the map. e.g. if you want 1:80000, input 80000")
