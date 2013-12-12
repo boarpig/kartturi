@@ -76,12 +76,15 @@ def generate_map(coords=(0, 0, 0, 0), scale=40000):
     whole.save('koko.png')
 
 def main():
-    parser = argparse.ArgumentParser(description="""Make maps out of
-        kansalaisen.karttapaikka.fi maps""")
+    parser = argparse.ArgumentParser(prog="kartturi", 
+        description="""Make maps out of kansalaisen.karttapaikka.fi maps""")
     parser.add_argument("-c", "--coordinates", nargs=4,
             default=[385943, 7221032, 396643, 7210952], type=int,
             help="Coordinates for north-west and south-east corners of map.")
+    scales = [8000000, 4000000, 2000000, 800000, 400000, 200000, 
+                80000, 40000, 16000, 8000, 4000, 2000]
     parser.add_argument("-s", "--scale", default=80000, type=int,
+            choices=scales,
             help="Scale of the map. e.g. if you want 1:80000, input 80000")
     parser.add_argument("-d", "--delay", default=1, type=int,
             help="Number of seconds between each server request, default: 1")
