@@ -39,7 +39,9 @@ def get_file(url):
     return img
 
 def get_map(coord, scale):
-    coordstr = str(coord[0]) + ',' + str(coord[1]) + ',' + str((coord[0]) + 2400) + ',' + str((coord[1]) + 2400)
+    addition = 150 * int(scale / 1000)
+    coordstr = str(coord[0]) + ',' + str(coord[1]) + ',' + str((coord[0]) +
+            addition) + ',' + str((coord[1]) + addition)
     mapname = ''
     url = "http://kansalaisen.karttapaikka.fi/image?" + "request=GetMap" + \
         "&bbox=" + coordstr + "&scale=" + str(scale) + "&width=600" + \
@@ -52,7 +54,7 @@ def get_map(coord, scale):
 
 def generate_map(coords=(0, 0, 0, 0), scale=40000):
     coords = list(coords)
-    addition = 1920
+    addition = 120 * int(scale / 1000)
     width = int(fabs(ceil((coords[2] - coords[0]) / float(addition))))
     height = int(fabs(ceil((coords[3] - coords[1]) / float(addition))))
     maara = width * (height + 2)
