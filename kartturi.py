@@ -62,7 +62,7 @@ def generate_map(coords=(0, 0, 0, 0), scale=40000):
     for x in range(width):
         for y in range(height + 2):
             monesko += 1
-            print("%.0f%%, %i/%i" % (monesko / float(maara) * 100, monesko, maara))
+            print("{:>3.0f}%, {}/{}".format(monesko / float(maara) * 100, monesko, maara))
             coord = (coords[0] + x * addition, coords[1] - y * addition)
             if y == 0:
                 column = get_map(coord, scale)
