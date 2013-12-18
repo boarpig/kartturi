@@ -86,8 +86,9 @@ def main():
                 80000, 40000, 16000, 8000, 4000, 2000]
     parser.add_argument("-s", "--scale", default=80000, type=int,
             help="Scale of the map. e.g. if you want 1:80000, input 80000")
-    parser.add_argument("-d", "--delay", default=1, type=int,
-            help="Number of seconds between each server request, default: 1")
+    parser.add_argument("-d", "--delay", default=2, type=int,
+            help="Number of seconds between each server request, default:" +
+            " %(default)s")
     global args
     args = parser.parse_args()
     if args.scale not in scales:
